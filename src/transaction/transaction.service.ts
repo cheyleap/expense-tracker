@@ -11,6 +11,9 @@ import { RequestContext } from '../common/middlewares/request';
 import { TransactionType } from './enums/transaction-type.enum';
 import { TransactionQueryDto } from './dto/transaction-query.dto';
 import { PaginationResponse } from '../common/interfaces/response.interface';
+import { Raw } from 'typeorm';
+import { DEFAULT_DATE_FORMAT } from '../common/constants/date.constant';
+import { dayJs } from '../common/utils/date.util';
 
 @Injectable()
 export class TransactionService {
@@ -47,11 +50,16 @@ export class TransactionService {
   ): Promise<PaginationResponse<Transaction>> {
     return this.transactionRepository.findWithPagination(
       queryDto,
-      ['type', 'description'],
+      ['transactionType', 'description'],
       {
         where: {
           category: { id: queryDto.categoryId },
           user: { id: queryDto.userId },
+          transactionType: queryDto.transactionType,
+          date: Raw(
+            (date: string) =>
+              `TO_CHAR(${date}, 'YYYY-MM-DD') BETWEEN '${dayJs(queryDto.fromDate).format(DEFAULT_DATE_FORMAT)}' AND '${dayJs(queryDto.toDate).format(DEFAULT_DATE_FORMAT)}'`,
+          ),
         },
         relation: { user: true, category: true },
         select: { user: { id: true }, category: { id: true } },

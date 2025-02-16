@@ -11,7 +11,7 @@ export class InitTransaction1739611280677 implements MigrationInterface {
             category_id INTEGER REFERENCES category (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
             type        VARCHAR(50) CHECK (type IN ('Income', 'Expense')),
             amount      DECIMAL(10, 2) NOT NULL,
-            date        TIMESTAMP               DEFAULT NOW(),
+            date        TIMESTAMP      NOT NULL DEFAULT NOW(),
             description TEXT,
             updated_by  INTEGER REFERENCES "user" (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
             created_by  INTEGER REFERENCES "user" (id) ON DELETE NO ACTION ON UPDATE NO ACTION,

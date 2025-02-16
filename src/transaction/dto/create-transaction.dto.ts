@@ -1,4 +1,5 @@
 import {
+  IsDate,
   IsDecimal,
   IsEnum,
   IsInt,
@@ -26,6 +27,11 @@ export class CreateTransactionDto {
   @IsDecimal({ decimal_digits: '2' })
   @IsNotEmpty()
   amount: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsDate()
+  date: Date;
 
   @IsString()
   @Optional()

@@ -11,7 +11,7 @@ import {
 } from 'typeorm';
 import { PaginationResponse } from '../interfaces/response.interface';
 import { BasePaginationQueryDto } from '../dto/base-pagination-query.dto';
-import { GetPagination } from '../utils/get-pagination';
+import { GetPaginationUtil } from '../utils/get-pagination.util';
 
 export class BaseRepositoryService<T> implements BaseRepository<T> {
   constructor(private readonly repository: Repository<T>) {}
@@ -56,7 +56,7 @@ export class BaseRepositoryService<T> implements BaseRepository<T> {
       mapFunction?: (data: T, index?: number) => any;
     },
   ): Promise<PaginationResponse<T>> {
-    return GetPagination(
+    return GetPaginationUtil(
       this.repository,
       pagination,
       searchableColumns,

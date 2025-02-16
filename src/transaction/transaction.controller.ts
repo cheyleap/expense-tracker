@@ -25,7 +25,7 @@ import {
 } from '@nestjs/swagger';
 import { ResponseMappingInterceptor } from '../common/interceptors/request-mapping-response.interceptor';
 import { IdResponseDto } from '../common/dto/api-id-reponse.dto';
-import { getPaginationResponseDto } from '../common/utils/get-pagination-response';
+import { getPaginationResponseDto } from '../common/utils/get-pagination-response.util';
 import { TransactionQueryDto } from './dto/transaction-query.dto';
 import { Transaction } from './entities/transaction.entity';
 

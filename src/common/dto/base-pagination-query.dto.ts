@@ -25,6 +25,14 @@ export class BasePaginationQueryDto {
   @IsOptional()
   orderBy: string;
 
+  @ApiPropertyOptional()
+  @IsOptional()
+  fromDate: Date;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  toDate: Date;
+
   @ApiPropertyOptional({ enum: ExportDataTypeEnum })
   @IsOptional()
   @IsEnum(ExportDataTypeEnum)

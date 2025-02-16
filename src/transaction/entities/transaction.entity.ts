@@ -9,6 +9,9 @@ export class Transaction extends AuditBaseEntity {
   @Column({ type: 'decimal', precision: 2 })
   amount: number;
 
+  @Column()
+  date: Date;
+
   @Column({ name: 'type' })
   transactionType: TransactionType;
 

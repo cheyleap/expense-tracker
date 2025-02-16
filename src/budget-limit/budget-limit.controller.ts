@@ -27,7 +27,7 @@ import {
 } from '@nestjs/swagger';
 import { IdResponseDto } from '../common/dto/api-id-reponse.dto';
 import { BudgetLimit } from './entities/budget-limit.entity';
-import { getPaginationResponseDto } from '../common/utils/get-pagination-response';
+import { getPaginationResponseDto } from '../common/utils/get-pagination-response.util';
 
 @ApiBearerAuth()
 @ApiTags('budget-limit')

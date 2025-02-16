@@ -20,7 +20,7 @@ import { BasePaginationQueryDto } from '../dto/base-pagination-query.dto';
 import { ResourceBadRequestException } from '../../exception-base/exception/bad-request.exception';
 import { PAGINATION_ORDER_DIRECTION } from '../enums/pagination-order-direction.enum';
 
-export async function GetPagination<
+export async function GetPaginationUtil<
   T extends ObjectLiteral,
   U extends ObjectLiteral,
   V,

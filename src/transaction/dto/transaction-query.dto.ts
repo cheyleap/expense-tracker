@@ -1,6 +1,7 @@
 import { BasePaginationQueryDto } from '../../common/dto/base-pagination-query.dto';
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsOptional } from 'class-validator';
+import { IsEnum, IsOptional } from 'class-validator';
+import { TransactionType } from '../enums/transaction-type.enum';
 
 export class TransactionQueryDto extends BasePaginationQueryDto {
   @ApiPropertyOptional()
@@ -10,4 +11,9 @@ export class TransactionQueryDto extends BasePaginationQueryDto {
   @ApiPropertyOptional()
   @IsOptional()
   categoryId: number;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsEnum(TransactionType)
+  transactionType: TransactionType;
 }
