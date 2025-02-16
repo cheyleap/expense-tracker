@@ -1,5 +1,4 @@
 import {
-  IsDate,
   IsDecimal,
   IsEnum,
   IsInt,
@@ -30,7 +29,6 @@ export class CreateTransactionDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsDate()
   date: Date;
 
   @IsString()

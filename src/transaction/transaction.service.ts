@@ -14,6 +14,8 @@ import { PaginationResponse } from '../common/interfaces/response.interface';
 import { Raw } from 'typeorm';
 import { DEFAULT_DATE_FORMAT } from '../common/constants/date.constant';
 import { dayJs } from '../common/utils/date.util';
+import { ExportFileDto } from '../common/dto/export.dto';
+import { exportDataFiles } from '../common/export-file/export-file';
 
 @Injectable()
 export class TransactionService {
@@ -45,6 +47,16 @@ export class TransactionService {
     });
   }
 
+  async export(queryDto: TransactionQueryDto, exportDto: ExportFileDto) {
+    const { data } = await this.findAll(queryDto);
+    return exportDataFiles(
+      queryDto.exportFileType,
+      'TRANSACTION',
+      exportDto,
+      data,
+    );
+  }
+
   findAll(
     queryDto: TransactionQueryDto,
   ): Promise<PaginationResponse<Transaction>> {
@@ -58,7 +70,8 @@ export class TransactionService {
           transactionType: queryDto.transactionType,
           date: Raw(
             (date: string) =>
-              `TO_CHAR(${date}, 'YYYY-MM-DD') BETWEEN '${dayJs(queryDto.fromDate).format(DEFAULT_DATE_FORMAT)}' AND '${dayJs(queryDto.toDate).format(DEFAULT_DATE_FORMAT)}'`,
+              `TO_CHAR(${date}, '${DEFAULT_DATE_FORMAT}') >= '${dayJs(queryDto.fromDate).format(DEFAULT_DATE_FORMAT)}' 
+              AND TO_CHAR(${date}, '${DEFAULT_DATE_FORMAT}') <= '${dayJs(queryDto.toDate).add(1, 'day').format(DEFAULT_DATE_FORMAT)}'`,
           ),
         },
         relation: { user: true, category: true },

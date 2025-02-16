@@ -19,7 +19,9 @@ import { AuthGuard } from '@nestjs/passport';
 import {
   ApiBearerAuth,
   ApiBody,
+  ApiConsumes,
   ApiOkResponse,
+  ApiProduces,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -28,6 +30,8 @@ import { IdResponseDto } from '../common/dto/api-id-reponse.dto';
 import { getPaginationResponseDto } from '../common/utils/get-pagination-response.util';
 import { TransactionQueryDto } from './dto/transaction-query.dto';
 import { Transaction } from './entities/transaction.entity';
+import { ExportFileDto } from '../common/dto/export.dto';
+import { ExportInterceptor } from '../common/interceptors/export.interceptor';
 
 @ApiBearerAuth()
 @ApiTags('transaction')
@@ -48,6 +52,18 @@ export class TransactionController {
   @ApiResponse({ status: 201, type: getPaginationResponseDto(Transaction) })
   findAll(@Query() queryDto: TransactionQueryDto) {
     return this.transactionService.findAll(queryDto);
+  }
+
+  @Post('export')
+  @UseInterceptors(ExportInterceptor)
+  @ApiConsumes('application/json')
+  @ApiProduces('application/octet-stream')
+  @ApiResponse({ status: 200, description: 'Export file', type: String })
+  export(
+    @Query() queryDto: TransactionQueryDto,
+    @Body() exportDto: ExportFileDto,
+  ) {
+    return this.transactionService.export(queryDto, exportDto);
   }
 
   @Get(':id')

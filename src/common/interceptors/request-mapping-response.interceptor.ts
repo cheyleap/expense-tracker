@@ -30,6 +30,9 @@ export class ResponseMappingInterceptor<T extends ResponseData>
   ): Observable<Response> {
     const request: Request = context.switchToHttp().getRequest();
     const { method, query } = request;
+    if (query.exportFileType) {
+      return next.handle();
+    }
     const offset = Number(query.offset) || DEFAULT_PAGINATION_OFFSET;
     const limit = Number(query.limit) || DEFAULT_PAGINATION_LIMIT;
     const keywords = (query.keywords as string) ?? '';
@@ -71,10 +74,6 @@ export class ResponseMappingInterceptor<T extends ResponseData>
 
   private mapStandardResponse(payload: any, method: string): Response {
     if (method === RequestMethodEnums.DELETE) return;
-
-    if (Buffer.isBuffer(payload)) {
-      return { data: instanceToPlain(payload) as T };
-    }
 
     if (payload?.id) {
       return { data: { id: payload.id } };
