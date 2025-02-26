@@ -11,8 +11,7 @@ import { Optional } from '@nestjs/common';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateTransactionDto {
-  @ApiProperty()
-  @IsNotEmpty()
+  @ApiPropertyOptional()
   @IsInt()
   @Min(1)
   categoryId: number;
