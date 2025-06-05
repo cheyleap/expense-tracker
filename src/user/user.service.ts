@@ -17,9 +17,14 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
+    // Extract user data from the data field
+    const { username, email, password, phone } = createUserDto.data;
+
     const user: User = await this.userRepository.create({
-      ...createUserDto,
-      password: this.hashPassword(createUserDto.password),
+      username,
+      email,
+      password: await this.hashPassword(password),
+      phone,
     });
     return this.userRepository.create(user);
   }

@@ -1,3 +1,4 @@
+import { Field, ObjectType } from '@nestjs/graphql';
 import {
   Column,
   CreateDateColumn,
@@ -7,8 +8,10 @@ import {
   VersionColumn,
 } from 'typeorm';
 
+@ObjectType()
 export class AuditBaseEntity {
   @PrimaryGeneratedColumn()
+  @Field()
   id: number;
 
   @Column()

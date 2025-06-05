@@ -26,7 +26,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
     let message = 'Internal server error';
     const errors = [];
-
+    console.log(exception);
     if (exception instanceof UnauthorizedException) {
       message = exception.message;
       errors.push('Unauthorized request.');

@@ -1,0 +1,59 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @isEnum(enumType: String!) on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @isNotEmpty on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @nonEmptyObject on INPUT_OBJECT | OBJECT
+
+directive @upper on FIELD_DEFINITION
+
+type BudgetLimit {
+  category: Category!
+  id: Float!
+  limitAmount: Float!
+  user: User!
+}
+
+type Category {
+  description: String!
+  id: Float!
+  name: String!
+}
+
+input CreateUserDto {
+  data: UpdateUserDto!
+  email: String!
+  password: String!
+  phone: String
+  userRole: String!
+  username: String!
+}
+
+type Mutation {
+  createUser(createUserDto: CreateUserDto!): User!
+  updateUser(id: Float!, updateUserDto: UpdateUserDto!): User!
+}
+
+type Query {
+  getBudgetLimitById(id: Float!): BudgetLimit!
+  getBudgetLimits: [BudgetLimit!]!
+  getUserById(id: Float!): User!
+  getUsers: [User!]!
+}
+
+input UpdateUserDto {
+  email: String!
+  password: String!
+  phone: String
+  username: String!
+}
+
+type User {
+  email: String!
+  id: Float!
+  phone: String
+  username: String!
+}
